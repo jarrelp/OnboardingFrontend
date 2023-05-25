@@ -65,54 +65,36 @@ const TabNavigator = ({ navigation }) => {
 
 export default TabNavigator;
 
-// import React from "react";
+// const TabNavigator = () =>
+//   // { navigation }
+//   {
+//     const [index, setIndex] = React.useState(0);
+//     const [routes] = React.useState([
+//       {
+//         key: "taken",
+//         title: "Taken",
+//         focusedIcon: "heart",
+//         unfocusedIcon: "heart-outline",
+//       },
+//       { key: "documenten", title: "Documenten", focusedIcon: "album" },
+//       {
+//         key: "leaderboard",
+//         title: "Leaderboard",
+//         focusedIcon: "bell",
+//         unfocusedIcon: "bell-outline",
+//       },
+//     ]);
 
-// import Ionicons from "react-native-vector-icons/Ionicons";
+//     const renderScene = BottomNavigation.SceneMap({
+//       taken: TaskScreen,
+//       documenten: DocumentStackScreen,
+//       leaderboard: LeaderboardScreen,
+//     });
 
-// import ProfileScreen from "../screens/ProfileScreen";
-
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-// import TabNavigator from "./TabNavigator";
-
-// import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
-
-// import { COLORS, images } from "../constants";
-
-// const Stack = createNativeStackNavigator();
-
-// const AuthStack = () => {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         headerStyle: { backgroundColor: COLORS.lightWhite },
-//         headerShadowVisible: false,
-//         headerRight: () => (
-//           <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
-//         ),
-//         headerTitle: "",
-//       }}
-//     >
-//       <Stack.Screen
-//         name="Home"
-//         component={TabNavigator}
-//         options={{
-//           drawerIcon: ({ color }) => (
-//             <Ionicons name="home-outline" size={22} color={color} />
-//           ),
-//         }}
+//     return (
+//       <BottomNavigation
+//         navigationState={{ index, routes }}
+//         onIndexChange={setIndex}
+//         renderScene={renderScene}
 //       />
-//       <Stack.Screen
-//         name="Profile"
-//         component={ProfileScreen}
-//         options={{
-//           drawerIcon: ({ color }) => (
-//             <Ionicons name="person-outline" size={22} color={color} />
-//           ),
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
-
-// export default AuthStack;
+//     );

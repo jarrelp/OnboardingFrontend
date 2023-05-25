@@ -1,6 +1,6 @@
 import ROUTES from "./routes";
 import IMAGES from "./images";
 import ICONS from "./icons";
-import { COLORS, FONT, SIZES, SHADOWS } from "./theme";
+import { COLORS, FONT, SIZES, SHADOWS, THEME } from "./theme";
 
-export { IMAGES, ICONS, ROUTES, COLORS, FONT, SIZES, SHADOWS };
+export { IMAGES, ICONS, ROUTES, COLORS, FONT, SIZES, SHADOWS, THEME };
