@@ -2,6 +2,8 @@ import React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { SegmentedButtons, Text } from "react-native-paper";
 
+import Timer from "../../components/Timer";
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 // import CustomHeader from "../../components/CustomHeader";
@@ -11,24 +13,32 @@ const TaskScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Icon name="compass-outline" size={300} />
-      <Text>Deze taak bevindt zich op: </Text>
-      <SegmentedButtons
-        value={value}
-        onValueChange={setValue}
-        buttons={[
-          {
-            value: "Verdieping1",
-            label: "Verdieping1",
-          },
-          {
-            value: "Verdieping2",
-            label: "Verdieping2",
-          },
-          { value: "Verdieping3", label: "Verdieping3" },
-        ]}
-      />
-      <View style={styles.taken}></View>
+      <View style={styles.compassContainer}>
+        <View style={styles.timeContainer}>
+          <Timer>29:12</Timer>
+        </View>
+      </View>
+      <View style={styles.containerCenter}>
+        <Icon name="compass-outline" size={300} />
+        <Text>Deze taak bevindt zich op: </Text>
+        <SegmentedButtons
+          value={value}
+          onValueChange={setValue}
+          buttons={[
+            {
+              value: "BG",
+              label: "BG",
+            },
+            {
+              value: "F1",
+              label: "F1 ",
+            },
+            { value: "F2", label: "F2" },
+          ]}
+        />
+      </View>
+
+      <View style={styles.takenContainer}></View>
     </SafeAreaView>
   );
 };
@@ -36,12 +46,22 @@ const TaskScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerCenter: {
     alignItems: "center",
   },
-  taken: {
+  compassContainer: {
+    flex: 1,
+  },
+  takenContainer: {
+    flex: 3,
     backgroundColor: "#e17000",
     height: "100%",
     width: "100%",
+  },
+  timeContainer: {
+    alignItems: "flex-end",
+    marginRight: 20,
   },
 });
 

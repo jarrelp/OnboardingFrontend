@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 
-import { COLORS, IMAGES, ROUTES, THEME } from "../constants";
+import { COLORS, IMAGES, ICONS, ROUTES, THEME } from "../constants";
 
 import TaskScreen from "../screens/home/TaskScreen";
 import LeaderboardScreen from "../screens/home/LeaderboardScreen";
@@ -25,8 +25,10 @@ const TabNavigator = ({ navigation }) => {
         tabBarStyle: { backgroundColor: THEME.colors.surface },
         tabBarInactiveTintColor: "black",
         tabBarActiveTintColor: THEME.colors.secondary,
-        headerStyle: { backgroundColor: COLORS.lightWhite },
+        headerStyle: { backgroundColor: THEME.colors.secondary },
+        headerTitleStyle: { color: THEME.colors.surface },
         headerShadowVisible: false,
+        headerRightContainerStyle: { marginRight: 15 },
         headerRight: () => (
           <ScreenHeaderBtn
             iconUrl={IMAGES.profile}
@@ -34,6 +36,7 @@ const TabNavigator = ({ navigation }) => {
             dimension="100%"
           />
         ),
+        backgroundColor: THEME.colors.surface,
       }}
     >
       <Tab.Screen
@@ -41,7 +44,7 @@ const TabNavigator = ({ navigation }) => {
         component={TaskScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="tasks" color={color} size={size} />
+            <ICONS.TabTakenIcon color={color} size={size} />
           ),
         }}
       />
