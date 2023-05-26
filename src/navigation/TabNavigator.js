@@ -2,6 +2,10 @@ import React from "react";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
+import Icon from "react-native-vector-icons/FontAwesome5";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
@@ -37,7 +41,7 @@ const TabNavigator = ({ navigation }) => {
         component={TaskScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" color={color} size={size} />
+            <Icon name="tasks" color={color} size={size} />
           ),
         }}
       />
@@ -46,7 +50,11 @@ const TabNavigator = ({ navigation }) => {
         component={DocumentStackScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="event-note" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="file-document-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
