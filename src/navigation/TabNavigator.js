@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 
-import { COLORS, IMAGES, ROUTES } from "../constants";
+import { COLORS, IMAGES, ROUTES, THEME } from "../constants";
 
 import TaskScreen from "../screens/home/TaskScreen";
 import LeaderboardScreen from "../screens/home/LeaderboardScreen";
@@ -18,9 +18,9 @@ const TabNavigator = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: "#AD40AF" },
-        tabBarInactiveTintColor: "#fff",
-        tabBarActiveTintColor: "yellow",
+        tabBarStyle: { backgroundColor: THEME.colors.surface },
+        tabBarInactiveTintColor: "black",
+        tabBarActiveTintColor: THEME.colors.secondary,
         headerStyle: { backgroundColor: COLORS.lightWhite },
         headerShadowVisible: false,
         headerRight: () => (
