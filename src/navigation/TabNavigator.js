@@ -2,11 +2,15 @@ import React from "react";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
+import Icon from "react-native-vector-icons/FontAwesome5";
+
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 
-import { COLORS, IMAGES, ROUTES } from "../constants";
+import { COLORS, IMAGES, ICONS, ROUTES, THEME } from "../constants";
 
 import TaskScreen from "../screens/home/TaskScreen";
 import LeaderboardScreen from "../screens/home/LeaderboardScreen";
@@ -18,11 +22,13 @@ const TabNavigator = ({ navigation }) => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: "#AD40AF" },
-        tabBarInactiveTintColor: "#fff",
-        tabBarActiveTintColor: "yellow",
-        headerStyle: { backgroundColor: COLORS.lightWhite },
+        tabBarStyle: { backgroundColor: THEME.colors.surface },
+        tabBarInactiveTintColor: "black",
+        tabBarActiveTintColor: THEME.colors.secondary,
+        headerStyle: { backgroundColor: THEME.colors.secondary },
+        headerTitleStyle: { color: THEME.colors.surface },
         headerShadowVisible: false,
+        headerRightContainerStyle: { marginRight: 15 },
         headerRight: () => (
           <ScreenHeaderBtn
             iconUrl={IMAGES.profile}
@@ -30,6 +36,7 @@ const TabNavigator = ({ navigation }) => {
             dimension="100%"
           />
         ),
+        backgroundColor: THEME.colors.surface,
       }}
     >
       <Tab.Screen
@@ -37,7 +44,7 @@ const TabNavigator = ({ navigation }) => {
         component={TaskScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" color={color} size={size} />
+            <ICONS.TabTakenIcon color={color} size={size} />
           ),
         }}
       />
@@ -46,7 +53,11 @@ const TabNavigator = ({ navigation }) => {
         component={DocumentStackScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="event-note" color={color} size={size} />
+            <MaterialCommunityIcons
+              name="file-document-outline"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -65,54 +76,36 @@ const TabNavigator = ({ navigation }) => {
 
 export default TabNavigator;
 
-// import React from "react";
+// const TabNavigator = () =>
+//   // { navigation }
+//   {
+//     const [index, setIndex] = React.useState(0);
+//     const [routes] = React.useState([
+//       {
+//         key: "taken",
+//         title: "Taken",
+//         focusedIcon: "heart",
+//         unfocusedIcon: "heart-outline",
+//       },
+//       { key: "documenten", title: "Documenten", focusedIcon: "album" },
+//       {
+//         key: "leaderboard",
+//         title: "Leaderboard",
+//         focusedIcon: "bell",
+//         unfocusedIcon: "bell-outline",
+//       },
+//     ]);
 
-// import Ionicons from "react-native-vector-icons/Ionicons";
+//     const renderScene = BottomNavigation.SceneMap({
+//       taken: TaskScreen,
+//       documenten: DocumentStackScreen,
+//       leaderboard: LeaderboardScreen,
+//     });
 
-// import ProfileScreen from "../screens/ProfileScreen";
-
-// import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-// import TabNavigator from "./TabNavigator";
-
-// import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
-
-// import { COLORS, images } from "../constants";
-
-// const Stack = createNativeStackNavigator();
-
-// const AuthStack = () => {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         headerStyle: { backgroundColor: COLORS.lightWhite },
-//         headerShadowVisible: false,
-//         headerRight: () => (
-//           <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
-//         ),
-//         headerTitle: "",
-//       }}
-//     >
-//       <Stack.Screen
-//         name="Home"
-//         component={TabNavigator}
-//         options={{
-//           drawerIcon: ({ color }) => (
-//             <Ionicons name="home-outline" size={22} color={color} />
-//           ),
-//         }}
+//     return (
+//       <BottomNavigation
+//         navigationState={{ index, routes }}
+//         onIndexChange={setIndex}
+//         renderScene={renderScene}
 //       />
-//       <Stack.Screen
-//         name="Profile"
-//         component={ProfileScreen}
-//         options={{
-//           drawerIcon: ({ color }) => (
-//             <Ionicons name="person-outline" size={22} color={color} />
-//           ),
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// };
-
-// export default AuthStack;
+//     );

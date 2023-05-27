@@ -1,7 +1,14 @@
-import menu from "../assets/icons/menu.png";
-// import profile from "../assets/icons/profile.png";
+import MatIcon from "react-native-vector-icons/MaterialIcons";
+import FontAweIcon from "react-native-vector-icons/FontAwesome5";
+import MatComIcon from "react-native-vector-icons/MaterialCommunityIcons";
+
+// tab bar icons
+const TabTakenIcon = (props) => <FontAweIcon name="tasks" {...props} />;
+const TabDocumentIcon = (props) => <MatComIcon name="tasks" {...props} />;
+const TabLeaderboardIcon = (props) => <MatIcon name="tasks" {...props} />;
 
 export default {
-  menu,
-  // profile,
+  TabTakenIcon,
+  TabDocumentIcon,
+  TabLeaderboardIcon,
 };

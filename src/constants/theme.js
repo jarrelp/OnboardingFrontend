@@ -1,3 +1,5 @@
+import { DefaultTheme } from "react-native-paper";
+
 const COLORS = {
   primary: "#312651",
   secondary: "#444262",
@@ -48,4 +50,15 @@ const SHADOWS = {
   },
 };
 
-export { COLORS, FONT, SIZES, SHADOWS };
+const THEME = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    text: "#000000",
+    primary: "#e17000",
+    secondary: "#01689b",
+    error: "#f13a59",
+  },
+};
+
+export { COLORS, FONT, SIZES, SHADOWS, THEME };
