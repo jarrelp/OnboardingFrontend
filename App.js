@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 
-import { AuthProvider } from "./src/context/AuthContext";
-import useAuth from "./src/hooks/useAuth";
+import AuthContext, { AuthProvider } from "./src/context/AuthContext";
 
 import AuthStack from "./src/navigation/AuthStack";
 import AppStack from "./src/navigation/AppStack";
@@ -19,10 +18,10 @@ function App() {
 export default App;
 
 export const Layout = () => {
-  const { isAuthenticatedState } = useAuth();
+  const { user } = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {isAuthenticatedState ? <AppStack /> : <AuthStack />}
+      {user !== null ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };
