@@ -19,10 +19,10 @@ function App() {
 export default App;
 
 export const Layout = () => {
-  const { isAuthenticatedState } = useAuth();
+  const { user } = useAuth();
   return (
     <NavigationContainer>
-      {isAuthenticatedState ? <AppStack /> : <AuthStack />}
+      {user != null ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

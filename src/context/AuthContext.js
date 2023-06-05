@@ -2,13 +2,16 @@ import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
+import JWT from "expo-jwt";
+
 const TOKEN_KEY = "my-jwt";
 export const API_URL = "https://api.developbetterapps.com";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [tokenState, setTokenState] = useState(null);
-  const [isAuthenticatedState, setIsAuthenticatedState] = useState(null);
+  const [authTokens, setAuthTokens] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadToken = async () => {
@@ -18,35 +21,35 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        setTokenState(token);
-        setIsAuthenticatedState(true);
+        setAuthTokens(token);
+        setUser(JWT.decode(token, TOKEN_KEY));
       }
     };
     loadToken();
   }, []);
 
-  const onRegister = async (email, password) => {
+  // login
+  let loginUser = async (email, password) => {
     try {
-      return await axios.post(`${API_URL}/users`, { email, password });
-    } catch (e) {
-      return { error: true, msg: e.response.data.msg };
-    }
-  };
+      const result = await axios.post(`${baseURL}/auth/jwt/create`, {
+        email,
+        password,
+      });
 
-  const onLogin = async (email, password) => {
-    try {
-      const result = await axios.post(`${API_URL}/auth`, { email, password });
+      console.log(
+        "🔥 ~ file: AuthContext.js: 41 ~ loginUser ~ result:",
+        result
+      );
 
-      console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
-
-      setTokenState(result.data.token);
-      setIsAuthenticatedState(true);
+      setAuthTokens(result.data.access);
+      // setIsAuthenticatedState(true);
+      setUser(JWT.decode(result.data.access, TOKEN_KEY));
 
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${result.data.token}`;
+      ] = `Bearer ${result.data.access}`;
 
-      await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
+      await SecureStore.setItemAsync(TOKEN_KEY, result.data.access);
 
       return result;
     } catch (e) {
@@ -54,7 +57,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const onLogout = async () => {
+  // const loginUser = async (email, password) => {
+  //   try {
+  //     const result = await axios.post(`${API_URL}/auth`, { email, password });
+
+  //     console.log("🔥 ~ file: AuthContext.js: 41 ~ loginUser ~ result:", result);
+
+  //     setAuthTokens(result.data.token);
+  //     setIsAuthenticatedState(true);
+
+  //     axios.defaults.headers.common[
+  //       "Authorization"
+  //     ] = `Bearer ${result.data.token}`;
+
+  //     await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
+
+  //     return result;
+  //   } catch (e) {
+  //     return { error: true, msg: e.response.data.msg };
+  //   }
+  // };
+
+  const logoutUser = async () => {
     // Delete token from storage
     await SecureStore.deleteItemAsync(TOKEN_KEY);
 
@@ -62,22 +86,31 @@ export const AuthProvider = ({ children }) => {
     axios.defaults.headers.common["Authorization"] = "";
 
     // Reset auth states
-    setTokenState(null);
-    setIsAuthenticatedState(false);
+    setAuthTokens(null);
+    setUser(null);
 
     console.log("🔥 ~ logged out!");
   };
 
+  const contextData = {
+    user: user,
+    authTokens: authTokens,
+    setAuthTokens: setAuthTokens,
+    setUser: setUser,
+    loginUser: loginUser,
+    logoutUser: logoutUser,
+  };
+
+  useEffect(() => {
+    if (authTokens) {
+      setUser(JWT.decode(authTokens.access, TOKEN_KEY));
+    }
+    setLoading(false);
+  }, [authTokens, loading]);
+
   return (
-    <AuthContext.Provider
-      value={{
-        onRegister,
-        onLogin,
-        onLogout,
-        tokenState,
-        isAuthenticatedState,
-      }}
-    >
+    <AuthContext.Provider value={contextData}>
+      {/* {loading ? null : { children }} */}
       {children}
     </AuthContext.Provider>
   );
