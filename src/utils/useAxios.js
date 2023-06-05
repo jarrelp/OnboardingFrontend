@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import JWT from "expo-jwt";
 import dayjs from "dayjs";
 import { useContext } from "react";
@@ -26,7 +26,7 @@ const useAxios = () => {
       refresh: authTokens.refresh,
     });
 
-    await SecureStore.setItemAsync(TOKEN_KEY, JSON.stringify(response.data)); // JSON.stringify(response.data)
+    AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(response.data));
 
     setAuthTokens(response.data);
     setUser(JWT.decode(response.data.access, TOKEN_KEY));

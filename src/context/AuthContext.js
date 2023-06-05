@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import JWT from "expo-jwt";
 
@@ -9,24 +9,17 @@ export const API_URL = "https://api.developbetterapps.com";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [authTokens, setAuthTokens] = useState(null);
-  const [user, setUser] = useState(null);
+  const [authTokens, setAuthTokens] = useState(() =>
+    AsyncStorage.getItem(TOKEN_KEY)
+      ? JSON.parse(AsyncStorage.getItem(TOKEN_KEY))
+      : null
+  );
+  const [user, setUser] = useState(() =>
+    AsyncStorage.getItem(TOKEN_KEY)
+      ? jwt_decode(AsyncStorage.getItem(TOKEN_KEY))
+      : null
+  );
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadToken = async () => {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      console.log("stored: ", token);
-
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-        setAuthTokens(JSON.parse(token));
-        setUser(JWT.decode(token, TOKEN_KEY));
-      }
-    };
-    loadToken();
-  }, []);
 
   // login
   let loginUser = async (email, password) => {
@@ -41,12 +34,10 @@ export const AuthProvider = ({ children }) => {
       console.log("🔥 ~ file: AuthContext.js: 41 ~ loginUser ~ result:", data);
 
       setAuthTokens(data);
-      // setIsAuthenticatedState(true);
+
       setUser(JWT.decode(data.access, TOKEN_KEY));
 
-      axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
-
-      await SecureStore.setItemAsync(TOKEN_KEY, JSON.stringify(data));
+      AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(data));
 
       return result;
     } catch (e) {
@@ -77,10 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = async () => {
     // Delete token from storage
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-
-    // Update HTTP Headers
-    axios.defaults.headers.common["Authorization"] = "";
+    AsyncStorage.removeItem(TOKEN_KEY);
 
     // Reset auth states
     setAuthTokens(null);
