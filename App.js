@@ -22,7 +22,7 @@ export const Layout = () => {
   const { user } = useAuth();
   return (
     <NavigationContainer>
-      {user != null ? <AppStack /> : <AuthStack />}
+      {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

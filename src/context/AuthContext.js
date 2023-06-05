@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-        setAuthTokens(token);
+        setAuthTokens(JSON.parse(token));
         setUser(JWT.decode(token, TOKEN_KEY));
       }
     };
@@ -36,20 +36,17 @@ export const AuthProvider = ({ children }) => {
         password,
       });
 
-      console.log(
-        "🔥 ~ file: AuthContext.js: 41 ~ loginUser ~ result:",
-        result
-      );
+      const data = await response.json();
 
-      setAuthTokens(result.data.access);
+      console.log("🔥 ~ file: AuthContext.js: 41 ~ loginUser ~ result:", data);
+
+      setAuthTokens(data);
       // setIsAuthenticatedState(true);
-      setUser(JWT.decode(result.data.access, TOKEN_KEY));
+      setUser(JWT.decode(data.access, TOKEN_KEY));
 
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${result.data.access}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
 
-      await SecureStore.setItemAsync(TOKEN_KEY, result.data.access);
+      await SecureStore.setItemAsync(TOKEN_KEY, JSON.stringify(data));
 
       return result;
     } catch (e) {
@@ -110,8 +107,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={contextData}>
-      {/* {loading ? null : { children }} */}
-      {children}
+      {loading ? null : children}
     </AuthContext.Provider>
   );
 };

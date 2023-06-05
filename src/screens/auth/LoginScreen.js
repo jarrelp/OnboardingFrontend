@@ -108,10 +108,10 @@ import { passwordValidator } from "../../helpers/passwordValidator";
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "Hans@gmail.com", error: "" });
   const [password, setPassword] = useState({ value: "Test123!", error: "" });
-  const { onLogin } = useAuth();
+  const { loginUser } = useAuth();
 
   const login = async () => {
-    const result = await onLogin(email.value, password.value);
+    const result = await loginUser(email.value, password.value);
     if (result.error) {
       alert(result.msg);
     } else {
@@ -119,7 +119,7 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
-  const onLoginPressed = () => {
+  const loginUserPressed = () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -156,7 +156,7 @@ export default function LoginScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <Button mode="contained" onPress={onLoginPressed}>
+      <Button mode="contained" onPress={loginUserPressed}>
         Login
       </Button>
       <View style={styles.row}>

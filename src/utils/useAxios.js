@@ -26,7 +26,7 @@ const useAxios = () => {
       refresh: authTokens.refresh,
     });
 
-    await SecureStore.setItemAsync(TOKEN_KEY, response.data); // JSON.stringify(response.data)
+    await SecureStore.setItemAsync(TOKEN_KEY, JSON.stringify(response.data)); // JSON.stringify(response.data)
 
     setAuthTokens(response.data);
     setUser(JWT.decode(response.data.access, TOKEN_KEY));
