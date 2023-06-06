@@ -36,7 +36,7 @@ const TabNavigator = ({ navigation }) => {
             dimension="100%"
           />
         ),
-        backgroundColor: THEME.colors.surface,
+        // backgroundColor: THEME.colors.surface,
       }}
     >
       <Tab.Screen

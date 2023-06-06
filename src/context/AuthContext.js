@@ -9,14 +9,14 @@ export const API_URL = "https://api.developbetterapps.com";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [authTokens, setAuthTokens] = useState(() =>
-    AsyncStorage.getItem(TOKEN_KEY)
-      ? JSON.parse(AsyncStorage.getItem(TOKEN_KEY))
+  const [authTokens, setAuthTokens] = useState(async () =>
+    (await AsyncStorage.getItem(TOKEN_KEY))
+      ? JSON.parse(await AsyncStorage.getItem(TOKEN_KEY))
       : null
   );
-  const [user, setUser] = useState(() =>
-    AsyncStorage.getItem(TOKEN_KEY)
-      ? jwt_decode(AsyncStorage.getItem(TOKEN_KEY))
+  const [user, setUser] = useState(async () =>
+    (await AsyncStorage.getItem(TOKEN_KEY))
+      ? jwt_decode(await AsyncStorage.getItem(TOKEN_KEY))
       : null
   );
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
       setUser(JWT.decode(data.access, TOKEN_KEY));
 
-      AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(data));
+      await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(data));
 
       return result;
     } catch (e) {
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = async () => {
     // Delete token from storage
-    AsyncStorage.removeItem(TOKEN_KEY);
+    await AsyncStorage.removeItem(TOKEN_KEY);
 
     // Reset auth states
     setAuthTokens(null);

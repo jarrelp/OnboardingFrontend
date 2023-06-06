@@ -7,9 +7,10 @@ import dayjs from "dayjs";
 const TOKEN_KEY = "my-jwt";
 const baseURL = "http://127.0.0.1:8000";
 
-const authTokens = AsyncStorage.getItem(TOKEN_KEY)
-  ? JSON.parse(AsyncStorage.getItem(TOKEN_KEY))
-  : null;
+const authTokens = async () =>
+  (await AsyncStorage.getItem(TOKEN_KEY))
+    ? JSON.parse(await AsyncStorage.getItem(TOKEN_KEY))
+    : null;
 
 const axiosInstance = axios.create({
   baseURL,
@@ -18,8 +19,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (req) => {
   if (!authTokens) {
-    authTokens = AsyncStorage.getItem(TOKEN_KEY)
-      ? JSON.parse(AsyncStorage.getItem(TOKEN_KEY))
+    authTokens = (await AsyncStorage.getItem(TOKEN_KEY))
+      ? JSON.parse(await AsyncStorage.getItem(TOKEN_KEY))
       : null;
     req.headers.Authorization = `Bearer ${authTokens?.access}`;
   }
@@ -33,7 +34,7 @@ axiosInstance.interceptors.request.use(async (req) => {
     refresh: authTokens.refresh,
   });
 
-  AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(response.data));
+  await AsyncStorage.setItem(TOKEN_KEY, JSON.stringify(response.data));
 
   req.headers.Authorization = `Bearer ${response.data.access}`;
   return req;
