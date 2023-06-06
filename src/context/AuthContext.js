@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/AxiosInstance";
 import * as SecureStore from "expo-secure-store";
 
 const TOKEN_KEY = "my-jwt";
-export const API_URL = "https://api.developbetterapps.com";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -25,17 +24,23 @@ export const AuthProvider = ({ children }) => {
     loadToken();
   }, []);
 
-  const onRegister = async (email, password) => {
+  const onRegister = async (username, password) => {
     try {
-      return await axios.post(`${API_URL}/users`, { email, password });
+      return await axios.post("/auth/jwt/create", {
+        username,
+        password,
+      });
     } catch (e) {
       return { error: true, msg: e.response.data.msg };
     }
   };
 
-  const onLogin = async (email, password) => {
+  const onLogin = async (username, password) => {
     try {
-      const result = await axios.post(`${API_URL}/auth`, { email, password });
+      const result = await axios.post("/auth/jwt/create", {
+        username,
+        password,
+      });
 
       console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
 

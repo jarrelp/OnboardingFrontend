@@ -13,12 +13,12 @@ import { IMAGES } from "../../constants";
 const EditProfileView = () => {
   const profile = {
     name: "Bert",
-    email: "Bert.Jansen@gmail.com",
+    username: "Bert.Jansen@gmail.com",
     password: "geheim",
     avatar: "https://example.com/jane-doe-avatar.png",
   };
   const [name, setName] = useState(profile.name);
-  const [email, setEmail] = useState(profile.email);
+  const [username, setUsername] = useState(profile.username);
   const [password, setPassword] = useState(profile.password);
   const [avatar, setAvatar] = useState(profile.avatar);
 
@@ -47,12 +47,12 @@ const EditProfileView = () => {
           value={name}
           onChangeText={setName}
         />
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}>Username</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter Email"
-          value={email}
-          onChangeText={setEmail}
+          placeholder="Enter Username"
+          value={username}
+          onChangeText={setUsername}
         />
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -63,7 +63,7 @@ const EditProfileView = () => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => handleSubmit({ name, email, password, avatar })}
+          onPress={() => handleSubmit({ name, username, password, avatar })}
         >
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>

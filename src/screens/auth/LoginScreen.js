@@ -11,12 +11,12 @@ import CustomButton from "../../components/CustomButton";
 import InputField from "../../components/InputField";
 
 // const LoginScreen = ({ navigation }) => {
-//   const [email, setEmail] = useState("Hans@gmail.com");
+//   const [username, setUsername] = useState("Hans@gmail.com");
 //   const [password, setPassword] = useState("Test123!");
 //   const { onLogin } = useAuth();
 
 //   const login = async () => {
-//     const result = await onLogin(email, password);
+//     const result = await onLogin(username, password);
 //     if (result.error) {
 //       alert(result.msg);
 //     } else {
@@ -38,18 +38,18 @@ import InputField from "../../components/InputField";
 //           Login
 //         </Text>
 //         <InputField
-//           label={"Email"}
+//           label={"Username"}
 //           icon={
 //             <MaterialIcons
-//               name="alternate-email"
+//               name="alternate-username"
 //               size={20}
 //               color="#666"
 //               style={{ marginRight: 5 }}
 //             />
 //           }
-//           keyboardType="email-address"
-//           onChangeText={(text) => setEmail(text)}
-//           value={email}
+//           keyboardType="username-address"
+//           onChangeText={(text) => setUsername(text)}
+//           value={username}
 //         />
 
 //         <InputField
@@ -102,16 +102,19 @@ import Button from "../../components/loginComponents/Button";
 import TextInput from "../../components/loginComponents/TextInput";
 import BackButton from "../../components/loginComponents/BackButton";
 import { THEME } from "../../constants";
-import { emailValidator } from "../../helpers/emailValidator";
+import { usernameValidator } from "../../helpers/usernameValidator";
 import { passwordValidator } from "../../helpers/passwordValidator";
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState({ value: "Hans@gmail.com", error: "" });
+  const [username, setUsername] = useState({
+    value: "Hans@gmail.com",
+    error: "",
+  });
   const [password, setPassword] = useState({ value: "Test123!", error: "" });
   const { onLogin } = useAuth();
 
   const login = async () => {
-    const result = await onLogin(email.value, password.value);
+    const result = await onLogin(username.value, password.value);
     if (result.error) {
       alert(result.msg);
     } else {
@@ -120,10 +123,10 @@ export default function LoginScreen({ navigation }) {
   };
 
   const onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
+    const usernameError = usernameValidator(username.value);
     const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
+    if (usernameError || passwordError) {
+      setUsername({ ...username, error: usernameError });
       setPassword({ ...password, error: passwordError });
       return;
     }
@@ -136,16 +139,14 @@ export default function LoginScreen({ navigation }) {
       <Logo />
       <Header>Welkom Terug.</Header>
       <TextInput
-        label="Email"
+        label="Username"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: "" })}
-        error={!!email.error}
-        errorText={email.error}
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: "" })}
+        error={!!username.error}
+        errorText={username.error}
         autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
+        autoCompleteType="username"
       />
       <TextInput
         label="Password"
