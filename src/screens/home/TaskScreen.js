@@ -3,10 +3,9 @@ import { View, SafeAreaView, StyleSheet } from "react-native";
 import { SegmentedButtons, Text } from "react-native-paper";
 
 import Timer from "../../components/Timer";
+import Distance from "../../components/Distance";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
-// import CustomHeader from "../../components/CustomHeader";
 
 const TaskScreen = () => {
   const [value, setValue] = React.useState("");
@@ -19,7 +18,7 @@ const TaskScreen = () => {
         </View>
       </View>
       <View style={styles.containerCenter}>
-        <Icon name="compass-outline" size={300} />
+        <Distance>52m</Distance>
         <Text>Deze taak bevindt zich op: </Text>
         <SegmentedButtons
           value={value}

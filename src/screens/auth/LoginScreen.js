@@ -111,18 +111,18 @@ export default function LoginScreen({ navigation }) {
     error: "",
   });
   const [password, setPassword] = useState({ value: "Test123!", error: "" });
-  const firstname = "test";
-  const lastname = "test";
-  const email = "@test@gmail.com";
+  // const firstname = "test";
+  // const lastname = "test";
+  // const email = "@test@gmail.com";
   const { onLogin } = useAuth();
 
   const login = async () => {
     const result = await onLogin(
       username.value,
-      password.value,
-      firstname,
-      lastname,
-      email
+      password.value
+      // firstname,
+      // lastname,
+      // email
     );
     if (result.error) {
       alert(result.msg);
