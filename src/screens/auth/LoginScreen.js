@@ -107,14 +107,23 @@ import { passwordValidator } from "../../helpers/passwordValidator";
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState({
-    value: "Hans@gmail.com",
+    value: "test",
     error: "",
   });
   const [password, setPassword] = useState({ value: "Test123!", error: "" });
+  const firstname = "test";
+  const lastname = "test";
+  const email = "@test@gmail.com";
   const { onLogin } = useAuth();
 
   const login = async () => {
-    const result = await onLogin(username.value, password.value);
+    const result = await onLogin(
+      username.value,
+      password.value,
+      firstname,
+      lastname,
+      email
+    );
     if (result.error) {
       alert(result.msg);
     } else {

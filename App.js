@@ -22,7 +22,7 @@ export const Layout = () => {
   const { isAuthenticatedState } = useAuth();
   return (
     <NavigationContainer>
-      {isAuthenticatedState ? <AppStack /> : <AuthStack />}
+      {!isAuthenticatedState ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

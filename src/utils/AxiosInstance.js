@@ -7,7 +7,10 @@ export default axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
-    withCredentials: false,
+    "Access-Control-Allow-Headers":
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+    "Access-Control-Allow-Credentials": true,
+    "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
   },
 });
 

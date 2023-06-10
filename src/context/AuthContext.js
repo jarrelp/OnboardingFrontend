@@ -24,22 +24,30 @@ export const AuthProvider = ({ children }) => {
     loadToken();
   }, []);
 
-  const onRegister = async (username, password) => {
+  const onRegister = async (username, password, firstname, lastname, email) => {
     try {
-      return await axios.post("/auth/jwt/create", {
+      return await axios.post("/auth/users", {
         username,
         password,
+        firstname,
+        lastname,
+        email,
       });
     } catch (e) {
-      return { error: true, msg: e.response.data.msg };
+      return { error: true, msg: e.response };
     }
   };
 
-  const onLogin = async (username, password) => {
+  const onLogin = async (username, password, firstname, lastname, email) => {
     try {
-      const result = await axios.post("/auth/jwt/create", {
+      console.log("🔥 start login try");
+
+      const result = await axios.post("/auth/users", {
         username,
         password,
+        firstname,
+        lastname,
+        email,
       });
 
       console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
@@ -55,7 +63,8 @@ export const AuthProvider = ({ children }) => {
 
       return result;
     } catch (e) {
-      return { error: true, msg: e.response.data.msg };
+      console.log("🔥 start login catch");
+      return { error: true, msg: e.response };
     }
   };
 
