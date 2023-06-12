@@ -16,11 +16,9 @@ const EditProfileView = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
-  // const [username, setUsername] = useState();
 
   const edit = async () => {
     const result = await axios.put("/auth/users/me/", {
-      // username: username,
       first_name: firstName,
       last_name: lastName,
       email: email,
@@ -33,7 +31,6 @@ const EditProfileView = () => {
   };
 
   useEffect(() => {
-    // response: "{ id: 1, username: "test", first_name: "test", last_name: "test", email: "test@gmail.com"}
     loadUser();
   }, []);
 
@@ -43,19 +40,12 @@ const EditProfileView = () => {
     setFirstName(response.data.first_name);
     setLastName(response.data.last_name);
     setEmail(response.data.email);
-    // setUsername(response.data.username);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        <Image style={styles.avatar} source={IMAGES.profile}></Image>
-        <TouchableOpacity
-          style={styles.changeAvatarButton}
-          onPress={() => {
-            /* open image picker */
-          }}
-        ></TouchableOpacity>
+        <Image style={styles.avatar} source={IMAGES.profile} />
       </View>
       <View style={styles.form}>
         <Text style={styles.label}>First Name</Text>
@@ -79,13 +69,6 @@ const EditProfileView = () => {
           value={email}
           onChangeText={setEmail}
         />
-        {/* <Text style={styles.label}>Username</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Username"
-          value={username}
-          onChangeText={setUsername}
-        /> */}
         <TouchableOpacity style={styles.button} onPress={edit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
@@ -115,7 +98,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 20,
-    backgroundColor: "#1E90FF",
+    backgroundColor: "#01689b",
     borderRadius: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -137,7 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   changeAvatarButtonText: {
-    color: "#1E90FF",
+    color: "#01689b",
     fontSize: 18,
   },
 });

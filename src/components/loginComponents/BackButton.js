@@ -1,8 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Image, StyleSheet, StatusBar } from "react-native";
-// import StatusBarHeight from "@expo/status-bar-height";
 
-export default function BackButton({ goBack }) {
+const BackButton = ({ goBack }) => {
   return (
     <TouchableOpacity onPress={goBack} style={styles.container}>
       <Image
@@ -11,7 +10,7 @@ export default function BackButton({ goBack }) {
       />
     </TouchableOpacity>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -24,3 +23,5 @@ const styles = StyleSheet.create({
     height: 24,
   },
 });
+
+export default BackButton;

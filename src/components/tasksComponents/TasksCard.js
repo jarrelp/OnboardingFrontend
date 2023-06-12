@@ -45,9 +45,9 @@ const TasksCard = () => {
     },
   ]);
 
-  function checkIsTrue(item) {
+  const checkIsTrue = (item) => {
     return item == true;
-  }
+  };
 
   useEffect(() => {
     if (taskList.length == Object.values(checkList).length) {

@@ -2,15 +2,13 @@ import React from "react";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import Icon from "react-native-vector-icons/FontAwesome5";
-
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import ScreenHeaderBtn from "../components/ScreenHeaderBtn";
 
-import { COLORS, IMAGES, ICONS, ROUTES, THEME } from "../constants";
+import { IMAGES, ICONS, ROUTES, THEME } from "../constants";
 
 import TaskScreen from "../screens/home/TaskScreen";
 import LeaderboardScreen from "../screens/home/LeaderboardScreen";
@@ -75,37 +73,3 @@ const TabNavigator = ({ navigation }) => {
 };
 
 export default TabNavigator;
-
-// const TabNavigator = () =>
-//   // { navigation }
-//   {
-//     const [index, setIndex] = React.useState(0);
-//     const [routes] = React.useState([
-//       {
-//         key: "taken",
-//         title: "Taken",
-//         focusedIcon: "heart",
-//         unfocusedIcon: "heart-outline",
-//       },
-//       { key: "documenten", title: "Documenten", focusedIcon: "album" },
-//       {
-//         key: "leaderboard",
-//         title: "Leaderboard",
-//         focusedIcon: "bell",
-//         unfocusedIcon: "bell-outline",
-//       },
-//     ]);
-
-//     const renderScene = BottomNavigation.SceneMap({
-//       taken: TaskScreen,
-//       documenten: DocumentStackScreen,
-//       leaderboard: LeaderboardScreen,
-//     });
-
-//     return (
-//       <BottomNavigation
-//         navigationState={{ index, routes }}
-//         onIndexChange={setIndex}
-//         renderScene={renderScene}
-//       />
-//     );

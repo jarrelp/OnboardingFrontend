@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { THEME } from "../../constants";
 
-export default function Header(props) {
+const Header = (props) => {
   return <Text style={styles.header} {...props} />;
-}
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -15,3 +15,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
 });
+
+export default Header;

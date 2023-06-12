@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
 import { THEME } from "../constants";
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const Distance = ({ mode, style, ...props }) => {
   return (
@@ -15,7 +14,6 @@ const Distance = ({ mode, style, ...props }) => {
         {...props}
         loading={false}
       />
-      {/* <ActivityIndicator animating={true} color={MD2Colors.red800} size={200} /> */}
     </>
   );
 };

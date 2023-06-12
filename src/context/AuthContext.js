@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const onRegister = async (username, password, firstName, lastName, email) => {
-    // try {
     return await axios.post("/auth/users/", {
       username,
       password,
@@ -33,9 +32,6 @@ export const AuthProvider = ({ children }) => {
       lastName,
       email,
     });
-    // } catch (e) {
-    //   return { error: true, msg: e.response };
-    // }
   };
 
   const onLogin = async (username, password) => {
@@ -59,10 +55,6 @@ export const AuthProvider = ({ children }) => {
     await SecureStore.setItemAsync(TOKEN_KEY, result.data.access);
 
     return result;
-    // } catch (e) {
-    //   console.log("🔥 start login catch");
-    //   return { error: true, msg: e.response };
-    // }
   };
 
   const onLogout = async () => {
@@ -95,62 +87,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export default AuthContext;
-
-// const onLogin = async (
-//   username,
-//   password
-//   // firstName, lastName, email
-// ) => {
-//   // try {
-//   console.log("🔥 start login try");
-
-//   // const result = await axios.post("/auth/jwt/create/", {
-//   //   username,
-//   //   password,
-//   //   // firstName,
-//   //   // lastName,
-//   //   // email,
-//   // });
-
-//   let formData = "username=" + username + "&password=" + password;
-//   console.log("🔥 ~ start request");
-//   fetch("http://127.0.0.1:8000/auth/jwt/create/", {
-//     method: "POST",
-//     credentials: "same-origin",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//     },
-//     body: formData,
-//   })
-//     .then((response) => response.json())
-//     .then((response) => {
-//       if (response.access) {
-//         alert(JSON.stringify(response));
-//         console.log(
-//           "🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:",
-//           JSON.stringify(response)
-//         );
-//         setTokenState(response);
-//       } else {
-//         alert("Probeer het opnieuw");
-//       }
-//     })
-//     .catch((error) => alert(error));
-
-//   // console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
-
-//   // setTokenState(result.data.token);
-//   setIsAuthenticatedState(true);
-
-//   axios.defaults.headers.common[
-//     "Authorization"
-//   ] = `Bearer ${result.data.token}`;
-
-//   await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
-
-//   return result;
-//   // } catch (e) {
-//   //   console.log("🔥 start login catch");
-//   //   return { error: true, msg: e.response };
-//   // }
-// };

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 import { THEME } from "../../constants";
 
-export default function Background({ children }) {
+const Background = ({ children }) => {
   return (
     <View style={styles.background}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -10,7 +10,7 @@ export default function Background({ children }) {
       </KeyboardAvoidingView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   background: {
@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default Background;

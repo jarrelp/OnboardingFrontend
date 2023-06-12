@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { List } from "react-native-paper";
 
 const DATA = [
@@ -82,9 +82,3 @@ const DocumentScreen = () => {
 };
 
 export default DocumentScreen;
-
-// <List.Item
-//         title="First Item"
-//         description="Item description"
-//         left={(props) => <List.Icon {...props} icon="folder" />}
-//       />

@@ -1,24 +1,10 @@
 import React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import {
-  SegmentedButtons,
-  Text,
-  Avatar,
-  Button,
-  Card,
-} from "react-native-paper";
+import { SegmentedButtons, Text, Button, Card } from "react-native-paper";
 
 import Timer from "../../components/tasksComponents/Timer";
 import Distance from "../../components/Distance";
-
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TasksCard from "../../components/tasksComponents/TasksCard";
-
-const RightButton = (props) => (
-  <Button style={styles.buttonRight} mode="contained">
-    Start
-  </Button>
-);
 
 const TaskScreen = () => {
   const [value, setValue] = React.useState("");
@@ -58,9 +44,8 @@ const TaskScreen = () => {
           <TasksCard />
         ) : (
           <Card style={styles.takenCard} mode="outlined">
-            <Card.Title
-            // right={RightButton}
-            />
+            <Card.Title />
+            <Card.Title />
             <Card.Content style={styles.cardContent}>
               <Text variant="titleLarge">Start het spel</Text>
               <Text variant="bodyMedium">
@@ -94,7 +79,6 @@ const styles = StyleSheet.create({
   takenContainer: {
     paddingTop: 30,
     flex: 2,
-    // backgroundColor: "#e17000",
     height: "100%",
     width: "100%",
   },
