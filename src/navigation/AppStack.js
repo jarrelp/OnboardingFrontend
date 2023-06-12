@@ -17,7 +17,7 @@ const AppStack = () => {
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: false,
-        drawerActiveBackgroundColor: "#aa18ea",
+        drawerActiveBackgroundColor: "#01689b",
         drawerActiveTintColor: "#fff",
         drawerInactiveTintColor: "#333",
         drawerLabelStyle: {
@@ -43,6 +43,10 @@ const AppStack = () => {
             <Icon name="account-circle" size={22} color={color} />
           ),
           headerShown: true,
+          headerStyle: {
+            backgroundColor: "#01689b",
+          },
+          headerTintColor: "white",
         }}
       />
     </Drawer.Navigator>

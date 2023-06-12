@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
-import { THEME } from "../constants";
+import { THEME } from "../../constants";
 
 const Timer = ({ mode, style, ...props }) => {
   return (

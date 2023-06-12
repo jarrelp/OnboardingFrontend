@@ -1,111 +1,6 @@
 import React, { useState } from "react";
-// import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 
 import useAuth from "../../hooks/useAuth";
-
-import InputField from "../../components/InputField";
-
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
-
-import CustomButton from "../../components/CustomButton";
-
-// const RegisterScreen = ({ navigation }) => {
-//   const [email, setEmail] = useState("Hans@gmail.com");
-//   const [password, setPassword] = useState("Test123!");
-//   const { onRegister } = useAuth();
-
-//   // We automatically call the login after a successful registration
-//   const register = async () => {
-//     const result = await onRegister(email, password);
-//     if (result.error) {
-//       alert(result.msg);
-//     } else {
-//       console.log("Successfully logged in");
-//       navigation.goBack();
-//     }
-//   };
-
-//   return (
-//     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
-//       <View
-//         showsVerticalScrollIndicator={false}
-//         style={{ paddingHorizontal: 25 }}
-//       >
-//         <Text
-//           style={{
-//             fontSize: 28,
-//             fontWeight: "500",
-//             color: "#333",
-//             marginBottom: 30,
-//           }}
-//         >
-//           Register
-//         </Text>
-
-//         <InputField
-//           label={"Email"}
-//           icon={
-//             <MaterialIcons
-//               name="alternate-email"
-//               size={20}
-//               color="#666"
-//               style={{ marginRight: 5 }}
-//             />
-//           }
-//           keyboardType="email-address"
-//           onChangeText={(text) => setEmail(text)}
-//           value={email}
-//         />
-
-//         <InputField
-//           label={"Password"}
-//           icon={
-//             <Ionicons
-//               name="ios-lock-closed-outline"
-//               size={20}
-//               color="#666"
-//               style={{ marginRight: 5 }}
-//             />
-//           }
-//           inputType="password"
-//           onChangeText={(text) => setPassword(text)}
-//           value={password}
-//         />
-
-//         <InputField
-//           label={"Confirm Password"}
-//           icon={
-//             <Ionicons
-//               name="ios-lock-closed-outline"
-//               size={20}
-//               color="#666"
-//               style={{ marginRight: 5 }}
-//             />
-//           }
-//           inputType="password"
-//         />
-
-//         <CustomButton label={"Register"} onPress={register} />
-
-//         <View
-//           style={{
-//             flexDirection: "row",
-//             justifyContent: "center",
-//             marginBottom: 30,
-//           }}
-//         >
-//           <Text>Already registered?</Text>
-//           <TouchableOpacity onPress={() => navigation.goBack()}>
-//             <Text style={{ color: "#AD40AF", fontWeight: "700" }}> Login</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </View>
-//     </SafeAreaView>
-//   );
-// };
-
-// export default RegisterScreen;
 
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
@@ -116,32 +11,51 @@ import Button from "../../components/loginComponents/Button";
 import TextInput from "../../components/loginComponents/TextInput";
 import BackButton from "../../components/loginComponents/BackButton";
 import { THEME, ROUTES } from "../../constants";
+import { firstNameValidator } from "../../helpers/firstNameValidator";
+import { lastNameValidator } from "../../helpers/lastNameValidator";
 import { emailValidator } from "../../helpers/emailValidator";
+import { usernameValidator } from "../../helpers/usernameValidator";
 import { passwordValidator } from "../../helpers/passwordValidator";
-import { nameValidator } from "../../helpers/nameValidator";
 
-export default function RegisterScreen({ navigation }) {
-  const [name, setName] = useState({ value: "", error: "" });
-  const [email, setEmail] = useState({ value: "", error: "" });
+const RegisterScreen = ({ navigation }) => {
+  const [username, setUsername] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [firstName, setFirstName] = useState({ value: "", error: "" });
+  const [lastName, setLastName] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({ value: "", error: "" });
   const { onRegister } = useAuth();
 
   const onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
+    const firstNameError = firstNameValidator(firstName.value);
+    const lastNameError = lastNameValidator(lastName.value);
     const emailError = emailValidator(email.value);
+    const usernameError = usernameValidator(username.value);
     const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
+    if (
+      firstNameError ||
+      lastNameError ||
+      emailError ||
+      usernameError ||
+      passwordError
+    ) {
+      setFirstName({ ...firstName, error: firstNameError });
+      setLastName({ ...lastName, error: lastNameError });
       setEmail({ ...email, error: emailError });
+      setUsername({ ...username, error: usernameError });
       setPassword({ ...password, error: passwordError });
       return;
     }
     register();
   };
 
-  //We automatically call the login after a successful registration
   const register = async () => {
-    const result = await onRegister(email.value, password.value);
+    const result = await onRegister(
+      username.value,
+      password.value,
+      firstName.value,
+      lastName.value,
+      email.value
+    );
     if (result.error) {
       alert(result.msg);
     } else {
@@ -157,12 +71,20 @@ export default function RegisterScreen({ navigation }) {
       <Logo />
       <Header>Create Account</Header>
       <TextInput
-        label="Name"
+        label="First Name"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: "" })}
-        error={!!name.error}
-        errorText={name.error}
+        value={firstName.value}
+        onChangeText={(text) => setFirstName({ value: text, error: "" })}
+        error={!!firstName.error}
+        errorText={firstName.error}
+      />
+      <TextInput
+        label="Last Name"
+        returnKeyType="next"
+        value={lastName.value}
+        onChangeText={(text) => setLastName({ value: text, error: "" })}
+        error={!!lastName.error}
+        errorText={lastName.error}
       />
       <TextInput
         label="Email"
@@ -175,6 +97,14 @@ export default function RegisterScreen({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
+      />
+      <TextInput
+        label="Username"
+        returnKeyType="next"
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: "" })}
+        error={!!username.error}
+        errorText={username.error}
       />
       <TextInput
         label="Password"
@@ -200,7 +130,7 @@ export default function RegisterScreen({ navigation }) {
       </View>
     </Background>
   );
-}
+};
 
 const styles = StyleSheet.create({
   row: {
@@ -212,3 +142,5 @@ const styles = StyleSheet.create({
     color: THEME.colors.primary,
   },
 });
+
+export default RegisterScreen;

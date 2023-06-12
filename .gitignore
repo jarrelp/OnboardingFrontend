@@ -1,1 +1,18 @@
 *node_modules/*
+
+# VSCode
+.vscode/.react/
+/expo/web/
+.expo/web/cache/development/babel-loader/03aece057880bfb30a383392c84a6a567ebe411b22ed930377819036b2990174.json
+
+.expo/web/cache/development/babel-loader/6a830704de1dd2829052da3e038c7e1f7a6cd7b67a72116eb4c73124dd1e75eb.json
+
+.expo/web/cache/development/babel-loader/7291b0b5f56d541d748c7e0a7bc3ad8cb3f7715f990f147fc10c879c8c19257c.json
+
+.expo/web/cache/development/babel-loader/75c8832c386eb6633d6117e4be995e01ad970831245811d75a831fc94c3856b0.json
+
+.expo/web/cache/production/images/favicon/favicon-24272cdaeff82cc5facdaccd982a6f05b60c4504704bbf94c19a6388659880bb-contain-transparent/favicon-16.png
+
+.expo/web/cache/production/images/favicon/favicon-24272cdaeff82cc5facdaccd982a6f05b60c4504704bbf94c19a6388659880bb-contain-transparent/favicon-32.png
+
+.expo/web/cache/production/images/favicon/favicon-24272cdaeff82cc5facdaccd982a6f05b60c4504704bbf94c19a6388659880bb-contain-transparent/favicon-48.png

@@ -1,9 +1,8 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/AxiosInstance";
 import * as SecureStore from "expo-secure-store";
 
 const TOKEN_KEY = "my-jwt";
-export const API_URL = "https://api.developbetterapps.com";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
@@ -25,33 +24,37 @@ export const AuthProvider = ({ children }) => {
     loadToken();
   }, []);
 
-  const onRegister = async (email, password) => {
-    try {
-      return await axios.post(`${API_URL}/users`, { email, password });
-    } catch (e) {
-      return { error: true, msg: e.response.data.msg };
-    }
+  const onRegister = async (username, password, firstName, lastName, email) => {
+    return await axios.post("/auth/users/", {
+      username,
+      password,
+      firstName,
+      lastName,
+      email,
+    });
   };
 
-  const onLogin = async (email, password) => {
-    try {
-      const result = await axios.post(`${API_URL}/auth`, { email, password });
+  const onLogin = async (username, password) => {
+    // try {
+    console.log("🔥 start login try");
 
-      console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
+    const result = await axios.post("/auth/jwt/create/", {
+      username,
+      password,
+    });
 
-      setTokenState(result.data.token);
-      setIsAuthenticatedState(true);
+    console.log("🔥 ~ file: AuthContext.js: 41 ~ onLogin ~ result:", result);
 
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${result.data.token}`;
+    setTokenState(result.data.access);
+    setIsAuthenticatedState(true);
 
-      await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `JWT ${result.data.access}`;
 
-      return result;
-    } catch (e) {
-      return { error: true, msg: e.response.data.msg };
-    }
+    await SecureStore.setItemAsync(TOKEN_KEY, result.data.access);
+
+    return result;
   };
 
   const onLogout = async () => {

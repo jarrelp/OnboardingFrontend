@@ -1,14 +1,14 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-export default function Logo() {
+const Logo = () => {
   return (
     <Image
       source={require("../../assets/images/loginImages/TOPLogo.png")}
       style={styles.image}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   image: {
@@ -18,3 +18,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+export default Logo;
