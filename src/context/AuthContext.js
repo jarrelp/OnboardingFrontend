@@ -52,7 +52,9 @@ export const AuthProvider = ({ children }) => {
     setTokenState(result.data.access);
     setIsAuthenticatedState(true);
 
-    axios.defaults.headers.common["Authorization"] = `Bearer ${result}`;
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `JWT ${result.data.access}`;
 
     await SecureStore.setItemAsync(TOKEN_KEY, result.data.access);
 

@@ -1,20 +1,36 @@
 import React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
-import { SegmentedButtons, Text } from "react-native-paper";
+import {
+  SegmentedButtons,
+  Text,
+  Avatar,
+  Button,
+  Card,
+} from "react-native-paper";
 
-import Timer from "../../components/Timer";
+import Timer from "../../components/tasksComponents/Timer";
 import Distance from "../../components/Distance";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import TasksCard from "../../components/tasksComponents/TasksCard";
+
+const RightButton = (props) => (
+  <Button style={styles.buttonRight} mode="contained">
+    Start
+  </Button>
+);
 
 const TaskScreen = () => {
   const [value, setValue] = React.useState("");
+  const [isStarted, setIsStarted] = React.useState(false);
+  const [isFinished, setIsFinished] = React.useState(false);
+  const [timer, setTimer] = React.useState("00:00:00");
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.compassContainer}>
         <View style={styles.timeContainer}>
-          <Timer>29:12</Timer>
+          <Timer>29:12:10</Timer>
         </View>
       </View>
       <View style={styles.containerCenter}>
@@ -37,7 +53,31 @@ const TaskScreen = () => {
         />
       </View>
 
-      <View style={styles.takenContainer}></View>
+      <View style={styles.takenContainer}>
+        {isStarted ? (
+          <TasksCard />
+        ) : (
+          <Card style={styles.takenCard} mode="outlined">
+            <Card.Title
+            // right={RightButton}
+            />
+            <Card.Content style={styles.cardContent}>
+              <Text variant="titleLarge">Start het spel</Text>
+              <Text variant="bodyMedium">
+                Wanneer u op start drukt begint de timer te lopen
+              </Text>
+              <Button
+                mode="contained"
+                onPress={() => {
+                  setIsStarted(true);
+                }}
+              >
+                Start
+              </Button>
+            </Card.Content>
+          </Card>
+        )}
+      </View>
     </SafeAreaView>
   );
 };
@@ -45,22 +85,36 @@ const TaskScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
   containerCenter: {
     alignItems: "center",
   },
-  compassContainer: {
-    flex: 1,
-  },
+  compassContainer: {},
   takenContainer: {
-    flex: 3,
-    backgroundColor: "#e17000",
+    paddingTop: 30,
+    flex: 2,
+    // backgroundColor: "#e17000",
     height: "100%",
     width: "100%",
   },
+  takenCard: {
+    height: "100%",
+    width: "100%",
+  },
+  cardContainer: {
+    flexDirection: "column",
+    flexGrow: 1,
+    justifyContent: "space-between",
+  },
+  cardContent: {
+    alignSelf: "center",
+  },
   timeContainer: {
     alignItems: "flex-end",
-    marginRight: 20,
+  },
+  buttonRight: {
+    marginEnd: 10,
   },
 });
 

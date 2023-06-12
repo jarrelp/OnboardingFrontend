@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,21 +8,43 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import axios from "../../utils/AxiosInstance";
+
 import { IMAGES } from "../../constants";
 
 const EditProfileView = () => {
-  const profile = {
-    name: "Bert",
-    username: "Bert.Jansen@gmail.com",
-    password: "geheim",
-    avatar: "https://example.com/jane-doe-avatar.png",
-  };
-  const [name, setName] = useState(profile.name);
-  const [username, setUsername] = useState(profile.username);
-  const [password, setPassword] = useState(profile.password);
-  const [avatar, setAvatar] = useState(profile.avatar);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState();
+  // const [username, setUsername] = useState();
 
-  const handleSubmit = () => {};
+  const edit = async () => {
+    const result = await axios.put("/auth/users/me/", {
+      // username: username,
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+    });
+    if (result.error) {
+      alert(result.msg);
+    } else {
+      console.log("Successfully edited");
+    }
+  };
+
+  useEffect(() => {
+    // response: "{ id: 1, username: "test", first_name: "test", last_name: "test", email: "test@gmail.com"}
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    let response = await axios.get("/auth/users/me/");
+    console.log("🔥 ~ userdetails: ", response.data);
+    setFirstName(response.data.first_name);
+    setLastName(response.data.last_name);
+    setEmail(response.data.email);
+    // setUsername(response.data.username);
+  };
 
   return (
     <View style={styles.container}>
@@ -33,38 +55,38 @@ const EditProfileView = () => {
           onPress={() => {
             /* open image picker */
           }}
-        >
-          <Text style={styles.changeAvatarButtonText}>
-            Change Profile Image
-          </Text>
-        </TouchableOpacity>
+        ></TouchableOpacity>
       </View>
       <View style={styles.form}>
-        <Text style={styles.label}>Name</Text>
+        <Text style={styles.label}>First Name</Text>
         <TextInput
           style={styles.input}
-          placeholder="Enter Name"
-          value={name}
-          onChangeText={setName}
+          placeholder="Enter First Name"
+          value={firstName}
+          onChangeText={setFirstName}
         />
-        <Text style={styles.label}>Username</Text>
+        <Text style={styles.label}>Last Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        {/* <Text style={styles.label}>Username</Text>
         <TextInput
           style={styles.input}
           placeholder="Enter Username"
           value={username}
           onChangeText={setUsername}
-        />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter Password"
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleSubmit({ name, username, password, avatar })}
-        >
+        /> */}
+        <TouchableOpacity style={styles.button} onPress={edit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
