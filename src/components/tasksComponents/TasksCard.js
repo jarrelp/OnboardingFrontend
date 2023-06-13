@@ -8,10 +8,9 @@ import { TaskData } from "./data";
 
 import Task from "./Task";
 
-const TasksCard = () => {
+const TasksCard = (props) => {
   const [number, setNumber] = useState(0);
   const [checkList, setCheckList] = useState([]);
-  const [isFinished, setIsFinished] = useState(false);
 
   // haal taken op
   const [taskList, setTaskList] = useState([
@@ -52,17 +51,21 @@ const TasksCard = () => {
   useEffect(() => {
     if (taskList.length == Object.values(checkList).length) {
       if (Object.values(checkList).every(checkIsTrue)) {
-        setIsFinished(true);
+        handleChangeIsFinished(true);
       } else {
-        setIsFinished(false);
+        handleChangeIsFinished(false);
       }
     }
 
-    console.log("isfinished: " + isFinished);
+    console.log("isfinished: " + props.isFinished);
   }, [checkList]);
 
   const handleChange = (event, newNumber) => {
     setNumber(newNumber);
+  };
+
+  const handleChangeIsFinished = (value) => {
+    props.setIsFinished(value);
   };
 
   return (
@@ -78,7 +81,7 @@ const TasksCard = () => {
           color={MD3Colors.error50}
         />
         <Card.Actions>
-          {number > 0 && !isFinished && (
+          {number > 0 && !props.isFinished && (
             <Button
               variant="outlined"
               size="large"
@@ -87,7 +90,7 @@ const TasksCard = () => {
               Previous
             </Button>
           )}
-          {number < taskList.length - 1 && !isFinished && (
+          {number < taskList.length - 1 && !props.isFinished && (
             <Button
               variant="contained"
               size="large"
@@ -96,7 +99,7 @@ const TasksCard = () => {
               Next
             </Button>
           )}
-          {isFinished && (
+          {props.isFinished && (
             <Button
               variant="contained"
               size="large"

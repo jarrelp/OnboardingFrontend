@@ -60,6 +60,7 @@ const RegisterScreen = ({ navigation }) => {
       alert(result.msg);
     } else {
       console.log("Successfully logged in");
+      console.log("result: " + result.msg);
       alert("Succesvol geregistreerd!");
       navigation.goBack();
     }

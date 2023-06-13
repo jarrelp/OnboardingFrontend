@@ -10,13 +10,12 @@ const TaskScreen = () => {
   const [value, setValue] = React.useState("");
   const [isStarted, setIsStarted] = React.useState(false);
   const [isFinished, setIsFinished] = React.useState(false);
-  const [timer, setTimer] = React.useState("00:00:00");
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.compassContainer}>
         <View style={styles.timeContainer}>
-          <Timer>29:12:10</Timer>
+          <Timer isStarted={isStarted} isFinished={isFinished} />
         </View>
       </View>
       <View style={styles.containerCenter}>
@@ -41,7 +40,7 @@ const TaskScreen = () => {
 
       <View style={styles.takenContainer}>
         {isStarted ? (
-          <TasksCard />
+          <TasksCard isFinished={isFinished} setIsFinished={setIsFinished} />
         ) : (
           <Card style={styles.takenCard} mode="outlined">
             <Card.Title />
