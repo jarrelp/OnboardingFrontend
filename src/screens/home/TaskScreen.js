@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { SegmentedButtons, Text, Button, Card } from "react-native-paper";
+
+import axios from "../../utils/AxiosInstance";
 
 import Timer from "../../components/tasksComponents/Timer";
 import Distance from "../../components/Distance";
 import TasksCard from "../../components/tasksComponents/TasksCard";
 
 const TaskScreen = () => {
-  const [value, setValue] = React.useState("");
-  const [isStarted, setIsStarted] = React.useState(false);
-  const [isFinished, setIsFinished] = React.useState(false);
+  const [value, setValue] = useState("");
+  const [isStarted, setIsStarted] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // haal taken op
+  const [taskList, setTaskList] = useState([]);
+
+  useEffect(() => {
+    getTaskList();
+  }, []);
+
+  const getTaskList = async () => {
+    let response = await axios.get("/speurtocht/task/");
+    console.log("🔥 ~ taskList: ", response.data);
+    setTaskList(response.data);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,21 +41,25 @@ const TaskScreen = () => {
           onValueChange={setValue}
           buttons={[
             {
-              value: "BG",
-              label: "BG",
+              value: "Begane Grond",
+              label: <Text>Begane grond</Text>,
             },
             {
-              value: "F1",
-              label: "F1 ",
+              value: "Verdieping 1",
+              label: <Text>Verdieping 1</Text>,
             },
-            { value: "F2", label: "F2" },
+            { value: "verdieping 2", label: <Text>Verdieping 2</Text> },
           ]}
         />
       </View>
 
       <View style={styles.takenContainer}>
         {isStarted ? (
-          <TasksCard isFinished={isFinished} setIsFinished={setIsFinished} />
+          <TasksCard
+            isFinished={isFinished}
+            setIsFinished={setIsFinished}
+            taskList={taskList}
+          />
         ) : (
           <Card style={styles.takenCard} mode="outlined">
             <Card.Title />
