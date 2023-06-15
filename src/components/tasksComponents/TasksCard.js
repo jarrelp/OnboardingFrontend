@@ -2,13 +2,16 @@ import { View } from "react-native";
 import { Card, Button, Text } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 
-import { ProgressBar, MD3Colors } from "react-native-paper";
+import { ProgressBar, MD3Colors, Dialog } from "react-native-paper";
 
 import Task from "./Task";
 
 const TasksCard = (props) => {
   const [number, setNumber] = useState(0);
   const [checkList, setCheckList] = useState([]);
+
+  const [visible, setVisible] = React.useState(false);
+  const hideDialog = () => setVisible(false);
 
   const checkIsTrue = (item) => {
     return item == true;
@@ -69,7 +72,7 @@ const TasksCard = (props) => {
             <Button
               variant="contained"
               size="large"
-              onPress={() => console.log("checklist: " + checkList)}
+              onPress={() => setVisible(true)}
             >
               Finish
             </Button>
@@ -79,6 +82,13 @@ const TasksCard = (props) => {
           Task: {number + 1} of {props.taskList.length}
         </Text>
       </Task>
+      <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog.Content>
+          <Text variant="bodyMedium">
+            Whohoo, je hebt alle taken voltooid in...
+          </Text>
+        </Dialog.Content>
+      </Dialog>
     </View>
   );
 };
