@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { List } from "react-native-paper";
 import axios from "../../utils/AxiosInstance";
 
 import DocumentCard from "../../components/tasksComponents/DocumentCard";
@@ -22,15 +21,7 @@ const DocumentScreen = () => {
   return (
     <FlatList
       data={documentList}
-      renderItem={({ item }) => (
-        // <List.Item
-        //   title={item.title}
-        //   description={item.text}
-        //   left={(props) => <List.Icon {...props} icon="folder" />}
-
-        // />
-        <DocumentCard document={item} />
-      )}
+      renderItem={({ item }) => <DocumentCard document={item} />}
       keyExtractor={(item) => item.task}
     />
   );
