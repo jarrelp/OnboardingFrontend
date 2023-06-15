@@ -1,82 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
 import { List } from "react-native-paper";
+import axios from "../../utils/AxiosInstance";
 
-const DATA = [
-  {
-    id: 1,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 2,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 3,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 4,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 5,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 6,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 7,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 8,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 9,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 10,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 11,
-    title: "First Item",
-    description: "Item description",
-  },
-  {
-    id: 12,
-    title: "First Item",
-    description: "Item description",
-  },
-];
+import DocumentCard from "../../components/tasksComponents/DocumentCard";
 
 const DocumentScreen = () => {
+  // haal documenten op
+  const [documentList, setDocumentList] = useState([]);
+
+  useEffect(() => {
+    getDocumentList();
+  }, []);
+
+  const getDocumentList = async () => {
+    let response = await axios.get("/speurtocht/info/");
+    console.log("🔥 ~ documentList: ", response.data);
+    setDocumentList(response.data);
+  };
+
   return (
     <FlatList
-      data={DATA}
+      data={documentList}
       renderItem={({ item }) => (
-        <List.Item
-          title={item.title}
-          description={item.description}
-          left={(props) => <List.Icon {...props} icon="folder" />}
-        />
+        // <List.Item
+        //   title={item.title}
+        //   description={item.text}
+        //   left={(props) => <List.Icon {...props} icon="folder" />}
+
+        // />
+        <DocumentCard document={item} />
       )}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item.task}
     />
   );
 };
