@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react";
 
 import { ProgressBar, MD3Colors, Dialog } from "react-native-paper";
 
+import useAuth from "../../hooks/useAuth";
+
 import Task from "./Task";
 
 const TasksCard = (props) => {
+  const { checkList } = useAuth();
+
   const [number, setNumber] = useState(0);
-  const [checkList, setCheckList] = useState([]);
 
   const [visible, setVisible] = React.useState(false);
   const hideDialog = () => setVisible(false);
@@ -39,12 +42,7 @@ const TasksCard = (props) => {
 
   return (
     <View>
-      <Task
-        task={props.taskList[number]}
-        setIsChecked={setCheckList}
-        checkList={checkList}
-        taskId={number}
-      >
+      <Task task={props.taskList[number]} taskId={number}>
         <ProgressBar
           progress={(number + 1) / props.taskList.length}
           color={MD3Colors.error50}
@@ -68,27 +66,11 @@ const TasksCard = (props) => {
               Next
             </Button>
           )}
-          {props.isFinished && (
-            <Button
-              variant="contained"
-              size="large"
-              onPress={() => setVisible(true)}
-            >
-              Finish
-            </Button>
-          )}
         </Card.Actions>
         <Text textAlign="center">
           Task: {number + 1} of {props.taskList.length}
         </Text>
       </Task>
-      <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Content>
-          <Text variant="bodyMedium">
-            Whohoo, je hebt alle taken voltooid in...
-          </Text>
-        </Dialog.Content>
-      </Dialog>
     </View>
   );
 };

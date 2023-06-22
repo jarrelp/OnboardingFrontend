@@ -1,4 +1,4 @@
-import { Card, Text } from "react-native-paper";
+import { Card } from "react-native-paper";
 import React from "react";
 import { Image } from "react-native";
 
@@ -8,14 +8,6 @@ import { IMAGES } from "../../constants";
 
 const LeaderboardCard = (props) => {
   return (
-    // <Card style={{ margin: 10 }}>
-    //   <Card.Title
-    //     title={props.leaderboard.firstName + " " + props.leaderboard.lastName}
-    //   />
-    //   <Card.Content>
-    //     <Text variant="bodyMedium">{props.leaderboard.time}</Text>
-    //   </Card.Content>
-    // </Card>
     <Card style={{ margin: 10 }}>
       <Card.Title
         title={props.leaderboard.firstName + " " + props.leaderboard.lastName}

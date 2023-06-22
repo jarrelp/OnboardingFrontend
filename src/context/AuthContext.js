@@ -9,6 +9,9 @@ export const AuthProvider = ({ children }) => {
   const [tokenState, setTokenState] = useState(null);
   const [isAuthenticatedState, setIsAuthenticatedState] = useState(null);
 
+  // document
+  const [checkList, setCheckList] = useState([]);
+
   useEffect(() => {
     const loadToken = async () => {
       const token = await SecureStore.getItemAsync(TOKEN_KEY);
@@ -79,6 +82,8 @@ export const AuthProvider = ({ children }) => {
         onLogout,
         tokenState,
         isAuthenticatedState,
+        checkList,
+        setCheckList,
       }}
     >
       {children}

@@ -1,11 +1,15 @@
 import { Card, Text, Checkbox } from "react-native-paper";
 import React from "react";
 
+import useAuth from "../../hooks/useAuth";
+
 const Task = (props) => {
-  let list = props.checkList;
+  const { checkList, setCheckList } = useAuth();
+
+  let list = checkList;
 
   const handleChange = () => {
-    props.setIsChecked((list) => ({
+    setCheckList((list) => ({
       ...list,
       [props.taskId]: !list[props.taskId],
     }));

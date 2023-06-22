@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
-import { List } from "react-native-paper";
-import axios from "../../utils/AxiosInstance";
 
 import LeaderboardCard from "../../components/tasksComponents/LeaderboardCard";
 
@@ -109,35 +107,12 @@ const Data = [
 ];
 
 const LeaderboardScreen = () => {
-  // haal documenten op
   const [leaderboardList, setLeaderboardList] = useState(Data);
-
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-
-  useEffect(() => {
-    loadUser();
-    console.log("🔥 ~ leaderboardList: " + leaderboardList);
-  }, []);
-
-  const loadUser = async () => {
-    let response = await axios.get("/auth/users/me/");
-
-    console.log("🔥 ~ userdetails: ", leaderboardList);
-    setFirstName(response.data.first_name);
-    setLastName(response.data.last_name);
-  };
 
   return (
     <FlatList
       data={leaderboardList}
       renderItem={({ item }) => (
-        // <List.Item
-        //   title={item.title}
-        //   description={item.text}
-        //   left={(props) => <List.Icon {...props} icon="folder" />}
-
-        // />
         <LeaderboardCard
           leaderboard={item}
           index={leaderboardList.indexOf(item)}
